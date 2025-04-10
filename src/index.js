@@ -9,7 +9,7 @@ import { auth } from './middlewares/authMiddlewares.js';
 
 const app = express();
 
-let dbName = 'techStore'; //TODO name
+let dbName = 'mySneakersDB';
 
 //DB setup
 try {
