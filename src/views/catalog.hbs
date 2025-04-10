@@ -3,55 +3,11 @@
         <h2 class="heading-catalog">Catalog</h2>
         <div class="wrap">
             <div class="sneaker-catalog">
-                <div class="sneakers-item">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/angular-project-4050b.appspot.com/o/js%20back-end%2Fmulti-color.webp?alt=media&token=1094585a-8b08-4b79-970a-337ecc6caf9a">
-                    <div>
-                    <h3>Adidas Multicolor</h3>
-                    <h2>$150</h2>
-                    <p>Condition: New</p>
-                    <p>Model Year: 2023</p>
-                    <p>Size: 42</p>
-                    <a href="#" class="btn">View Details</a>
-                </div>
-                </div>
-                <div class="sneakers-item">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/angular-project-4050b.appspot.com/o/js%20back-end%2Fblue-black.webp?alt=media&token=5acb5401-3309-432c-8089-d4b1b1d87258">
-                    <div>
-                        <h3>Nike Air Jordan (Blue & Black)</h3>
-                        <h2>$180</h2>
-                        <p>Condition: New</p>
-                        <p>Model Year: 2023</p>
-                        <p>Size: 42</p>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-                
-                <div class="sneakers-item">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/angular-project-4050b.appspot.com/o/js%20back-end%2Fred-white.webp?alt=media&token=f63d2645-487a-4125-95c2-eab40c9b427b">
-                    <div>
-                        <h3>Nike Air Jordan (Red & White)</h3>
-                        <h2>$190</h2>
-                        <p>Condition: New</p>
-                        <p>Model Year: 2024</p>
-                        <p>Size: 44</p>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-                
-                <div class="sneakers-item">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/angular-project-4050b.appspot.com/o/js%20back-end%2Fconerse.webp?alt=media&token=1c0512d1-c859-464a-a2fd-11388ac4fe52">
-                    <div>
-                        <h3>Converse (White with Red Face)</h3>
-                        <h2>$80</h2>
-                        <p>Condition: Used</p>
-                        <p>Model Year: 2022</p>
-                        <p>Size: 39</p>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-                
-                <!-- Repeat sneakers-item divs for more products -->
-                <p class="no-post">There haven't been any sneakers posted yet.</p>
+                {{#each sneakers}}
+                    {{> sneaker}}
+                {{else}}
+                    <p class="no-post">There haven't been any sneakers posted yet.</p>
+                {{/each}}
             </div>
         </div>
     </section>
