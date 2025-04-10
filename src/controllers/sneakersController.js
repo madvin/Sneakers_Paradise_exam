@@ -5,28 +5,6 @@ import { getErrorMessage } from '../utils/errorUtils.js';
 
 const sneakersController = Router();
 
-sneakersController.get('/', async (req, res) => {
-    try {
-        const latestSneakers = await sneakersService.getLatest(); 
-        res.render('home', { latestSneakers });
-    } catch (err) {
-        return res.render('/', {
-            error: getErrorMessage(err)
-        })
-    }
-});
-
-sneakersController.get('/catalog', async (req, res) => {
-    try {
-        const sneakers = await sneakersService.getAll(); 
-        res.render('catalog', { sneakers });
-    } catch (err) {
-        return res.render('/catalog', {
-            error: getErrorMessage(err)
-        })
-    }
-});
-
 sneakersController.get('/create', isAuth, (req, res) => {
     res.render('sneakers/create');
 });
@@ -78,5 +56,16 @@ sneakersController.post('/edit/:id', isAuth, async (req, res) => {
     }
     res.redirect(`/sneakers/details/${id}`);
 });
+
+sneakersController.get('/delete/:id', isAuth, async (req, res) => {
+    const id = req.params.id;
+    const sneaker = await sneakersService.getOne(id);
+
+    if (!sneaker) {
+        return res.render('404', { error: 'Sneaker not found!' });
+    }
+    res.render('sneakers/delete', { sneaker });
+}
+);
 
 export default sneakersController;
