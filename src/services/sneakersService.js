@@ -1,5 +1,16 @@
 import Sneakers from '../models/Sneakers.js';
 
+function getDate() {
+    const date = new Date();
+    return date.toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    }); 
+}
+
 export default {
     getAll() {
         return Sneakers.findAll();
@@ -14,7 +25,9 @@ export default {
     create(sneakersData, userId) {
         const sneaker = {
             ...sneakersData,
-            userId,
+            createdAt: getDate(),
+            likes: [],
+            owner: userId,
         };
 
         return Sneakers.create(sneaker);

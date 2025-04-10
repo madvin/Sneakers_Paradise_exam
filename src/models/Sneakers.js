@@ -40,12 +40,6 @@ const sneakersSchema = new Schema({
     image: {
         type: String,
         required: true,
-        validate: {
-            validator: function (value) {
-                return /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(value);
-            },
-            message: 'Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif',
-        },
     },
     owner: {
         type: Types.ObjectId,
