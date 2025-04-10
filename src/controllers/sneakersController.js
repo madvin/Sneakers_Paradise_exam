@@ -7,7 +7,7 @@ const sneakersController = Router();
 
 sneakersController.get('/', async (req, res) => {
     try {
-        const latestSneakers = await sneakersService.getLatest(); // only latest 3
+        const latestSneakers = await sneakersService.getLatest(); 
         res.render('home', { latestSneakers });
     } catch (err) {
         return res.render('/', {
@@ -18,7 +18,7 @@ sneakersController.get('/', async (req, res) => {
 
 sneakersController.get('/catalog', async (req, res) => {
     try {
-        const sneakers = await sneakersService.getAll(); // all sneakers
+        const sneakers = await sneakersService.getAll(); 
         res.render('catalog', { sneakers });
     } catch (err) {
         return res.render('/catalog', {
