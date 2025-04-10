@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes.js';
-import { tempData } from './middlewares/tempDataMiddleware.js';
+
 import { auth } from './middlewares/authMiddlewares.js';
 
 
@@ -38,9 +38,9 @@ app.set('views', 'src/views');
 app.use(express.static('src/public'));
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-// app.use(tempData);
-app.use(auth);
 app.use(routes);
+app.use(auth);
+
 
 
 app.listen(3000, () => console.log('Server is listening on http://localhost:3000...'));

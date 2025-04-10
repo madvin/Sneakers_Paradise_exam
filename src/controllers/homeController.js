@@ -2,9 +2,10 @@ import { Router } from 'express';
 import sneakersService from '../services/sneakersService.js';
 import { getErrorMessage } from '../utils/errorUtils.js';
 
-const router = Router();
+const homeController = Router();
 
-router.get('/', async (req, res) => {
+homeController.get('/', async (req, res) => {
+
     try {
         const latestSneakers = await sneakersService.getLatest(); 
         res.render('home', { latestSneakers });
@@ -15,19 +16,19 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/catalog', async (req, res) => {
+homeController.get('/catalog', async (req, res) => {
     try {
         const sneakers = await sneakersService.getAll(); 
         res.render('catalog', { sneakers });
     } catch (err) {
-        return res.render('/catalog', {
+        return res.render('catalog', {
             error: getErrorMessage(err)
         })
     }
 });
 
-router.get('/about', (req, res) => {
+homeController.get('/about', (req, res) => {
     res.render('about');
 });
 
-export default router;
+export default homeController;
