@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes.js';
+import { tempDataMiddleware } from './middlewares/tempDataMiddleware.js';
 import { auth } from './middlewares/authMiddlewares.js';
 
 
@@ -11,7 +12,7 @@ const app = express();
 
 let dbName = 'mySneakersDB';
 
-//DB setup
+
 try {
     const uri = `mongodb://localhost:27017/${dbName}`;
     await mongoose.connect(uri);
@@ -22,7 +23,7 @@ try {
     console.log(err.message);
 }
 
-//Handlebars setup
+
 app.engine('hbs', handlebars.engine({
     extname: 'hbs',
     runtimeOptions: {
@@ -33,12 +34,13 @@ app.engine('hbs', handlebars.engine({
 app.set('view engine', 'hbs');
 app.set('views', 'src/views');
 
-// Express setup
+
 app.use(express.static('src/public'));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(tempDataMiddleware);
 app.use(auth);
 app.use(routes);
 
-// Start Express
+
 app.listen(3000, () => console.log('Server is listening on http://localhost:3000...'));

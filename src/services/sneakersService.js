@@ -39,10 +39,16 @@ export default {
         return Sneakers.findByIdAndDelete(id);
     },
     getAllByUserId(userId) {
-        return Sneakers.findAll({
+        return Sneakers.find({
             where: {
                 userId,
             },
+        });
+    },
+    getLatest() {
+        return Sneakers.find({
+            order: [['createdAt', 'DESC']],
+            limit: 3,
         });
     },
 }
