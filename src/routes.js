@@ -8,6 +8,7 @@ const routes = Router();
 // TODO: define routes
 
 routes.use(router);
+routes.use('/catalog', router);
 routes.use('/auth', authController);
 routes.use('/sneakers', sneakersController);
 

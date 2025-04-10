@@ -16,6 +16,16 @@ const sneakersSchema = new Schema({
         required: true,
         min: [0, 'Price must be a positive number'],
     },
+    size: {
+        type: String,
+        required: true,
+        validate: {
+            validator: function (value) {
+                return /^\d+(\.\d+)?$/.test(value);
+            },
+            message: 'Size must be a number',
+        },
+    },
     condition: {
         type: String,
         required: true,
@@ -40,6 +50,12 @@ const sneakersSchema = new Schema({
     image: {
         type: String,
         required: true,
+        validate: {
+            validator: function (value) {
+                return /^(http|https):\/\//.test(value);
+            },
+            message: 'Image URL must be a valid URL',
+        },
     },
     owner: {
         type: Types.ObjectId,
