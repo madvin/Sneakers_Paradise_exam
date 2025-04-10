@@ -13,10 +13,10 @@ function getDate() {
 
 export default {
     getAll() {
-        return Sneakers.findAll();
+        return Sneakers.find();
     },
     getOne(id) {
-        return Sneakers.findOne({
+        return Sneakers.find({
             where: {
                 id,
             },
