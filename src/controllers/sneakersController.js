@@ -24,9 +24,12 @@ sneakersController.post('/create', isAuth, async (req, res) => {
     res.redirect('/');
 });
 
+
 sneakersController.get('/details/:id', async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
+
+    console.log(req.params.id);
 
     if (!sneaker) {
         return res.render('404', { error: 'Sneaker not found!' });
@@ -47,7 +50,7 @@ sneakersController.post('/edit/:id', isAuth, async (req, res) => {
     const sneakersData = req.body;
 
     try {
-        await sneakersService.update(id, sneakersData);
+        await sneakersService.update(id, ...sneakersData);
     } catch (err) {
         return res.render('sneakers/edit', {
             sneakers: sneakersData,

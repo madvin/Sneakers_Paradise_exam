@@ -35,7 +35,7 @@ export default {
     update(id, sneakersData) {
         return Sneakers.findByIdAndUpdate(id, sneakersData, { runValidators: true });
     },
-    delete(id) {
+    remove(id) {
         return Sneakers.findByIdAndDelete(id);
     },
     getAllByUserId(userId) {
