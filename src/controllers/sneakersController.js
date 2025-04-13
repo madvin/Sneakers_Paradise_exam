@@ -48,7 +48,7 @@ sneakersController.post('/edit/:id', isAuth, async (req, res) => {
     const sneakersData = req.body;
 
     try {
-        await sneakersService.update(id, ...sneakersData);
+        await sneakersService.update(id, sneakersData);
     } catch (err) {
         return res.render('sneakers/edit', {
             sneakers: sneakersData,
@@ -63,15 +63,19 @@ sneakersController.get('/delete/:id', isAuth, async (req, res) => {
     const sneaker = await sneakersService.getOne(id);
     const hasLiked = sneaker.likes.includes(req.user.id);
     const isOwner = sneaker.owner == req.user.id;
-    const isLoggedIn = req.user;
-
+    
     if (!sneaker) {
         return res.render('404', { error: 'Sneaker not found!' });
     }
-    res.render('sneakers/delete', { sneaker, isOwner, hasLiked, isLoggedIn });
-}
-);
-sneakersController.get('/details/:id', async (req, res) => {
+    res.render('sneakers/delete', { 
+        sneaker, 
+        isOwner, 
+        hasLiked, 
+        isLoggedIn: isAuth 
+    });
+});
+
+sneakersController.get('/details/:id', isAuth, async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
 
@@ -79,16 +83,27 @@ sneakersController.get('/details/:id', async (req, res) => {
         return res.render('404', { error: 'Sneaker not found!' });
     }
 
-    const isLoggedIn = !!req.user;
-    const isOwner = isLoggedIn && sneaker.owner?.toString() === req.user.id;
-    const hasLiked = isLoggedIn && sneaker.likes.includes(req.user.id);
+    const isOwner = isAuth && sneaker.owner?.toString() === req.user.id;
+    const hasLiked = isAuth && sneaker.likes.includes(req.user.id);
 
     res.render('sneakers/details', {
         sneaker,
-        isLoggedIn,
+        isLoggedIn: isAuth,
         isOwner,
         hasLiked,
     });
+});
+
+sneakersController.get('/like/:id', isAuth, async (req, res) => {
+    const sneakerId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        await sneakersService.like(sneakerId, userId);
+        res.redirect(`/sneakers/details/${sneakerId}`);
+    } catch (err) {
+        res.render('404', { error: 'Failed to like sneaker' });
+    }
 });
 
 export default sneakersController;
