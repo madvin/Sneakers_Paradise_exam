@@ -10,7 +10,7 @@ homeController.get('/', async (req, res) => {
         const latestSneakers = await sneakersService.getLatest(); 
         res.render('home', { latestSneakers });
     } catch (err) {
-        return res.render('/', {
+        return res.render('home', {
             error: getErrorMessage(err)
         })
     }
