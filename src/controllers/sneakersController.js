@@ -29,8 +29,6 @@ sneakersController.get('/details/:id', async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
 
-    console.log(req.params.id);
-
     if (!sneaker) {
         return res.render('404', { error: 'Sneaker not found!' });
     }
@@ -63,12 +61,34 @@ sneakersController.post('/edit/:id', isAuth, async (req, res) => {
 sneakersController.get('/delete/:id', isAuth, async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
+    const hasLiked = sneaker.likes.includes(req.user.id);
+    const isOwner = sneaker.owner == req.user.id;
+    const isLoggedIn = req.user;
 
     if (!sneaker) {
         return res.render('404', { error: 'Sneaker not found!' });
     }
-    res.render('sneakers/delete', { sneaker });
+    res.render('sneakers/delete', { sneaker, isOwner, hasLiked, isLoggedIn });
 }
 );
+sneakersController.get('/details/:id', async (req, res) => {
+    const id = req.params.id;
+    const sneaker = await sneakersService.getOne(id);
+
+    if (!sneaker) {
+        return res.render('404', { error: 'Sneaker not found!' });
+    }
+
+    const isLoggedIn = !!req.user;
+    const isOwner = isLoggedIn && sneaker.owner?.toString() === req.user.id;
+    const hasLiked = isLoggedIn && sneaker.likes.includes(req.user.id);
+
+    res.render('sneakers/details', {
+        sneaker,
+        isLoggedIn,
+        isOwner,
+        hasLiked,
+    });
+});
 
 export default sneakersController;

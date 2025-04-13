@@ -16,11 +16,7 @@ export default {
         return Sneakers.find();
     },
     getOne(id) {
-        return Sneakers.find({
-            where: {
-                id,
-            },
-        });
+        return Sneakers.findById(id);
     },
     create(sneakersData, userId) {
         const sneaker = {
@@ -50,4 +46,9 @@ export default {
         .sort({ createdAt: -1 })
         .limit(3)   
     },
+    like(id, userId) {
+        return Sneakers.findByIdAndUpdate(id, {
+            $addToSet: { likes: userId }
+        });
+    }
 }
