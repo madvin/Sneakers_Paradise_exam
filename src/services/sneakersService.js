@@ -46,9 +46,8 @@ export default {
         });
     },
     getLatest() {
-        return Sneakers.find({
-            order: [['createdAt', 'DESC']],
-            limit: 3,
-        });
+        return Sneakers.find()
+        .sort({ createdAt: -1 })
+        .limit(3)   
     },
 }
