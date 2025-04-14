@@ -65,14 +65,15 @@ sneakersController.get('/delete/:id', isAuth, async (req, res) => {
     const isOwner = sneaker.owner == req.user.id;
     
     if (!sneaker) {
-        return res.render('404', { error: 'Sneaker not found!' });
+        await sneakersService.remove(id);
     }
-    res.render('sneakers/delete', { 
+    res.render('sneakers/catalog', { 
         sneaker, 
         isOwner, 
         hasLiked, 
         isLoggedIn: isAuth 
     });
+ 
 });
 
 sneakersController.get('/details/:id', isAuth, async (req, res) => {
