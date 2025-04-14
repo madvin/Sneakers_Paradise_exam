@@ -11,7 +11,7 @@ routes.use(homeController);
 routes.use('/sneakers', sneakersController);
 routes.use('/catalog', homeController);
 routes.use('/auth', authController);
-
+routes.use('/profile', authController);
 
 routes.get('*', (req, res) => {
     res.render('404');
