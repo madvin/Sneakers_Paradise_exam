@@ -3,6 +3,7 @@ import authService from '../services/authService.js';
 import { AUTH_COOKIE_NAME } from '../config.js';
 import { isAuth } from '../middlewares/authMiddlewares.js';
 import { getErrorMessage } from '../utils/errorUtils.js';
+import sneakersController from './sneakersController.js';
 
 const authController = Router();
 
@@ -47,5 +48,18 @@ authController.get('/logout', isAuth, (req, res) => {
     res.clearCookie(AUTH_COOKIE_NAME);
     res.redirect('/');
 });
+
+authController.get('/profile', isAuth, async (req, res) => {
+    const user = req.user;
+    const sneakers = await sneakersController.getAllByUserId(user._id);
+    if (!sneakers) {
+        return res.render('auth/profile', {
+            error: getErrorMessage(err),
+            user,
+            sneakers: []
+        });
+    }
+    res.render('auth/profile', {user, sneakers});
+})
 
 export default authController;

@@ -1,36 +1,39 @@
+<section class="details-hero">
+  <div class="wrap">
+    <h2>Sneakers Details</h2>
+  </div>
+</section>
 
-    <section class="details-hero">
-        <div class="wrap">
-            <h2>Sneakers Details</h2>
-        </div>
-    </section>
+<section class="details-content">
+  <div class="wrap">
+    <div class="sneakers-details">
+      <div class="sneakers-image">
+        <img src="{{sneaker.image}}" alt="{{sneaker.model}}" />
+      </div>
+      <div class="sneakers-info">
+        <h3>Brand: {{sneaker.brand}}</h3>
+        <p><strong>Model:</strong> {{sneaker.model}}</p>
+        <p><strong>Price:</strong> ${{sneaker.price}}</p>
+        <p><strong>Size:</strong> {{sneaker.size}}</p>
+        <p><strong>Condition:</strong> {{sneaker.condition}}</p>
+        <p><strong>Model Year:</strong> {{sneaker.year}}</p>
+        <p><strong>Description:</strong> {{sneaker.description}}</p>
+      </div>
 
-    <section class="details-content">
-        <div class="wrap">
-            <div class="sneakers-details">
-                <div class="sneakers-image">
-                    <img src="{{image}}" alt="{{model}}">
-                </div>
-                <div class="sneakers-info">
-                    <h3>Brand: {{brand}}</h3>
-                    <p><strong>Model:</strong> {{model}}</p>
-                    <p><strong>Price:</strong> ${{price}}</p>
-                    <p><strong>Size:</strong> {{size}}</p>
-                    <p><strong>Condition:</strong> {{condition}}</p>
-                    <p><strong>Model Year:</strong> {{year}}</p>
-                    <p><strong>Description:</strong> {{description}}</p>
-                </div>
-                
-            </div>
-            <div class="buttons-wrap">
-                {{#if isOwner}}
-                <button class="btn edit"><a href="/sneakers/edit/{{id}}">Edit</a></button>
-                <button class="btn delete"><a href="/sneakers/edit/{{id}}">Delete</a></button>
-                {{/if}}
-                {{#if isLoggedIn}}
-                <button class="btn prefer"><a href="">Prefer</a></button>
-                {{/if}}
-                 <p class="prefer-message">You've already preferred this sneakers!</p>
-            </div>
-        </div>
-    </section>
+    </div>
+    <div class="buttons-wrap">
+  {{#if isOwner}}
+    <a href="/sneakers/edit/{{sneaker._id}}" class="btn edit">Edit</a>
+    <a href="/sneakers/delete/{{sneaker._id}}" class="btn delete">Delete</a>
+  {{/if}}
+
+  {{#if isLoggedIn}}
+    {{#unless hasLiked}}
+      <a href="/sneakers/like/{{sneaker._id}}" class="btn prefer">Prefer</a>
+    {{else}}
+      <p class="prefer-message">You've already preferred this sneakers!</p>
+    {{/unless}}
+  {{/if}}
+</div>
+  </div>
+</section>

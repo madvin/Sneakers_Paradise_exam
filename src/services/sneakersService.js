@@ -13,14 +13,10 @@ function getDate() {
 
 export default {
     getAll() {
-        return Sneakers.findAll();
+        return Sneakers.find();
     },
     getOne(id) {
-        return Sneakers.findOne({
-            where: {
-                id,
-            },
-        });
+        return Sneakers.findById(id);
     },
     create(sneakersData, userId) {
         const sneaker = {
@@ -35,7 +31,7 @@ export default {
     update(id, sneakersData) {
         return Sneakers.findByIdAndUpdate(id, sneakersData, { runValidators: true });
     },
-    delete(id) {
+    remove(id) {
         return Sneakers.findByIdAndDelete(id);
     },
     getAllByUserId(userId) {
@@ -46,9 +42,13 @@ export default {
         });
     },
     getLatest() {
-        return Sneakers.find({
-            order: [['createdAt', 'DESC']],
-            limit: 3,
-        });
+        return Sneakers.find()
+        .sort({ createdAt: -1 })
+        .limit(3)   
     },
+    like(id, userId) {
+        return Sneakers.findByIdAndUpdate(id, {
+            $addToSet: { likes: userId }
+        });
+    }
 }

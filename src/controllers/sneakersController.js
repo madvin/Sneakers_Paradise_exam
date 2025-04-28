@@ -24,6 +24,7 @@ sneakersController.post('/create', isAuth, async (req, res) => {
     res.redirect('/create');
 });
 
+
 sneakersController.get('/details/:id', async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
@@ -60,12 +61,50 @@ sneakersController.post('/edit/:id', isAuth, async (req, res) => {
 sneakersController.get('/delete/:id', isAuth, async (req, res) => {
     const id = req.params.id;
     const sneaker = await sneakersService.getOne(id);
+    const hasLiked = sneaker.likes.includes(req.user.id);
+    const isOwner = sneaker.owner == req.user.id;
+    
+    if (!sneaker) {
+        await sneakersService.remove(id);
+    }
+    res.render('sneakers/catalog', { 
+        sneaker, 
+        isOwner, 
+        hasLiked, 
+        isLoggedIn: isAuth 
+    });
+ 
+});
+
+sneakersController.get('/details/:id', isAuth, async (req, res) => {
+    const id = req.params.id;
+    const sneaker = await sneakersService.getOne(id);
 
     if (!sneaker) {
         return res.render('404', { error: 'Sneaker not found!' });
     }
-    res.render('sneakers/delete', { sneaker });
-}
-);
+
+    const isOwner = isAuth && sneaker.owner?.toString() === req.user.id;
+    const hasLiked = isAuth && sneaker.likes.includes(req.user.id);
+
+    res.render('sneakers/details', {
+        sneaker,
+        isLoggedIn: isAuth,
+        isOwner,
+        hasLiked,
+    });
+});
+
+sneakersController.get('/like/:id', isAuth, async (req, res) => {
+    const sneakerId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        await sneakersService.like(sneakerId, userId);
+        res.redirect(`/sneakers/details/${sneakerId}`);
+    } catch (err) {
+        res.render('404', { error: 'Failed to like sneaker' });
+    }
+});
 
 export default sneakersController;
