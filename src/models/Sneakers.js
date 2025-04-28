@@ -9,7 +9,7 @@ const sneakersSchema = new Schema({
     model: {
         type: String,
         required: true,
-        minlength: [5, 'Model name must be at least 5 characters long'],
+        minlength: [3, 'Model name must be at least 3 characters long'],
     },
     price: {
         type: Number,

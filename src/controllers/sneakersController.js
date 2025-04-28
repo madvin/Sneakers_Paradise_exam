@@ -15,6 +15,7 @@ sneakersController.post('/create', isAuth, async (req, res) => {
 
     try {
         await sneakersService.create(sneakersData, userId);
+        res.render('catalog')
     } catch (err) {
         return res.render('sneakers/create', {
             sneakers: sneakersData,
