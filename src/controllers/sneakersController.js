@@ -21,7 +21,7 @@ sneakersController.post('/create', isAuth, async (req, res) => {
             error: getErrorMessage(err)
         })
     }
-    res.redirect('/');
+    res.redirect('/create');
 });
 
 sneakersController.get('/details/:id', async (req, res) => {
